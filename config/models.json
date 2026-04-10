@@ -1,0 +1,31 @@
+{
+  "node_ip": "10.94.80.13",
+  "engine": "ollama",
+  "gpu": "NVIDIA L4",
+  "models": [
+    {
+      "name": "gemma3:27b",
+      "family": "gemma",
+      "parameters": "27B",
+      "provider": "Google DeepMind",
+      "status": "active",
+      "notes": "Modelo principal atual"
+    },
+    {
+      "name": "gemma2:27b",
+      "family": "gemma",
+      "parameters": "27B",
+      "provider": "Google DeepMind",
+      "status": "active",
+      "notes": ""
+    },
+    {
+      "name": "phi3:mini",
+      "family": "phi",
+      "parameters": "~3.8B",
+      "provider": "Microsoft",
+      "status": "legacy",
+      "notes": "Modelo utilizado na inicialização do projeto"
+    }
+  ]
+}

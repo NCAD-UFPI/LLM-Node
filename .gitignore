@@ -1,0 +1,15 @@
+# Dependências e artefatos de build
+__pycache__/
+*.pyc
+*.pyo
+node_modules/
+dist/
+build/
+
+# Arquivos de ambiente
+.env
+.env.local
+
+# Sistema operacional
+.DS_Store
+Thumbs.db
