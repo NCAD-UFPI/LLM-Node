@@ -8,7 +8,7 @@ set -euo pipefail
 HOST="${OLLAMA_HOST:-10.94.80.13}"
 PORT="${OLLAMA_PORT:-11434}"
 
-# Allow overriding host via argument
+# Permite sobrescrever o endereço do nó via argumento
 while [[ $# -gt 0 ]]; do
   case "$1" in
     --host) HOST="$2"; shift 2 ;;
@@ -30,10 +30,10 @@ echo ""
 echo "[ Ollama ]"
 if curl -sf --max-time 10 "${BASE_URL}/api/version" -o /tmp/ollama_version.json 2>/dev/null; then
   VERSION=$(python3 -c "import json,sys; d=json.load(open('/tmp/ollama_version.json')); print(d.get('version','N/A'))" 2>/dev/null || cat /tmp/ollama_version.json)
-  echo "  Status  : ✅ Online"
+  echo "  Situação: ✅ Online"
   echo "  Versão  : ${VERSION}"
 else
-  echo "  Status  : ❌ Offline ou inacessível (verifique conexão com a rede UFPI)"
+  echo "  Situação: ❌ Offline ou inacessível (verifique conexão com a rede UFPI)"
 fi
 echo ""
 

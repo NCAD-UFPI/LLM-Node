@@ -7,5 +7,5 @@
   "host": "10.94.80.13",
   "port": 11434,
   "timeout_seconds": 120,
-  "network": "UFPI (TechNE cluster)"
+  "network": "UFPI (cluster TechNE)"
 }

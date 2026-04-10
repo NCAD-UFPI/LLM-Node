@@ -28,7 +28,7 @@ A GPU NVIDIA L4 é otimizada para inferência de modelos de linguagem de grande 
 
 ## Motor de LLM
 
-**Ollama** é o runtime utilizado para servir e gerenciar os modelos de linguagem neste nó.
+**Ollama** é o serviço utilizado para servir e gerenciar os modelos de linguagem neste nó.
 
 - **Porta padrão:** `11434`
 - **API base:** `http://10.94.80.13:11434`
@@ -40,7 +40,7 @@ A GPU NVIDIA L4 é otimizada para inferência de modelos de linguagem de grande 
 |-----------------------------------------------|----------------------------------|
 | `GET  /api/version`                           | Versão do Ollama                 |
 | `GET  /api/tags`                              | Lista modelos disponíveis        |
-| `POST /api/generate`                          | Geração de texto (completion)    |
+| `POST /api/generate`                          | Geração de texto                 |
 | `POST /api/chat`                              | Chat multi-turno                 |
 | `POST /api/pull`                              | Baixar novo modelo               |
 | `DELETE /api/delete`                          | Remover modelo                   |
@@ -52,17 +52,17 @@ A GPU NVIDIA L4 é otimizada para inferência de modelos de linguagem de grande 
 ### Gemma 3 – 27B  (`gemma3:27b`)
 - **Provedor:** Google DeepMind
 - **Parâmetros:** 27 bilhões
-- **Status:** ✅ Ativo (modelo principal)
+- **Situação:** ✅ Ativo (modelo principal)
 
 ### Gemma 2 – 27B  (`gemma2:27b`)
 - **Provedor:** Google DeepMind
 - **Parâmetros:** 27 bilhões
-- **Status:** ✅ Ativo
+- **Situação:** ✅ Ativo
 
 ### Phi-3 Mini  (`phi3:mini`)  _(Legado)_
 - **Provedor:** Microsoft
 - **Parâmetros:** ~3.8 bilhões
-- **Status:** 🗂️ Legado – foi o modelo usado para inicializar o projeto
+- **Situação:** 🗂️ Legado – foi o modelo usado para inicializar o projeto
 - **Referência:** https://azure.microsoft.com/en-us/blog/introducing-phi-3/
 
 ---
@@ -90,7 +90,7 @@ Os scripts disponíveis em [`scripts/`](../scripts/) automatizam as verificaçõ
 
 | Script               | Descrição                                      |
 |----------------------|------------------------------------------------|
-| `check_node.sh`      | Status geral do nó (Ollama + GPU)              |
+| `check_node.sh`      | Situação geral do nó (Ollama + GPU)            |
 | `check_gpu.sh`       | Informações detalhadas da GPU NVIDIA L4        |
 | `list_models.sh`     | Modelos carregados no Ollama                   |
 

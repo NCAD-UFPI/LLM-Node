@@ -6,7 +6,7 @@
 set -euo pipefail
 
 echo "======================================================"
-echo "  Status da GPU – NVIDIA L4"
+echo "  Situação da GPU – NVIDIA L4"
 echo "  Nó: 10.94.80.13 | TechNE – UFPI"
 echo "  Data: $(date '+%Y-%m-%d %H:%M:%S')"
 echo "======================================================"

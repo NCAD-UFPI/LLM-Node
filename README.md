@@ -19,10 +19,10 @@ Repositório de monitoramento e manutenção do nó computacional de LLMs do clu
 
 ## 🤖 Modelos Disponíveis
 
-| Modelo         | Parâmetros | Status         |
-|----------------|------------|----------------|
-| `gemma3:27b`   | 27B        | ✅ Disponível  |
-| `gemma2:27b`   | 27B        | ✅ Disponível  |
+| Modelo         | Parâmetros | Situação            |
+|----------------|------------|---------------------|
+| `gemma3:27b`   | 27B        | ✅ Disponível       |
+| `gemma2:27b`   | 27B        | ✅ Disponível       |
 | `phi3:mini`    | ~3.8B      | 🗂️ Legado (inicial) |
 
 > **Nota:** O projeto foi iniciado com o modelo **Phi3-Mini** da Microsoft. Atualmente a frota principal usa modelos da família Gemma.

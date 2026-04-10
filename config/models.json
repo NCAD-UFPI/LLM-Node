@@ -8,7 +8,7 @@
       "family": "gemma",
       "parameters": "27B",
       "provider": "Google DeepMind",
-      "status": "active",
+      "status": "ativo",
       "notes": "Modelo principal atual"
     },
     {
@@ -16,7 +16,7 @@
       "family": "gemma",
       "parameters": "27B",
       "provider": "Google DeepMind",
-      "status": "active",
+      "status": "ativo",
       "notes": ""
     },
     {
@@ -24,7 +24,7 @@
       "family": "phi",
       "parameters": "~3.8B",
       "provider": "Microsoft",
-      "status": "legacy",
+      "status": "legado",
       "notes": "Modelo utilizado na inicialização do projeto"
     }
   ]
