@@ -1,0 +1,11 @@
+{
+  "engine": "ollama",
+  "version_endpoint": "http://10.94.80.13:11434/api/version",
+  "models_endpoint": "http://10.94.80.13:11434/api/tags",
+  "generate_endpoint": "http://10.94.80.13:11434/api/generate",
+  "chat_endpoint": "http://10.94.80.13:11434/api/chat",
+  "host": "10.94.80.13",
+  "port": 11434,
+  "timeout_seconds": 120,
+  "network": "UFPI (cluster TechNE)"
+}
