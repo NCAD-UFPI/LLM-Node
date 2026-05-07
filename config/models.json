@@ -1,31 +1,53 @@
 {
   "node_ip": "10.94.80.13",
   "engine": "ollama",
+  "model_storage": "/opt/llm/.ollama/models/blobs",
   "gpu": "NVIDIA L4",
   "models": [
     {
-      "name": "gemma3:27b",
+      "name": "gemma4:31b",
       "family": "gemma",
-      "parameters": "27B",
+      "parameters": "31.3B",
+      "size": "~19 GB",
       "provider": "Google DeepMind",
       "status": "ativo",
-      "notes": "Modelo principal atual"
+      "notes": "Gemma 4 (High) para raciocínio complexo e lógica"
+    },
+    {
+      "name": "gemma4:latest",
+      "family": "gemma",
+      "parameters": "8.0B",
+      "size": "~9.6 GB",
+      "provider": "Google DeepMind",
+      "status": "ativo",
+      "notes": "Gemma 4 (Base) para chats rápidos e tarefas gerais"
+    },
+    {
+      "name": "gemma3:27b",
+      "family": "gemma",
+      "parameters": "27.4B",
+      "size": "~17 GB",
+      "provider": "Google DeepMind",
+      "status": "ativo",
+      "notes": "Modelo principal para investigação"
     },
     {
       "name": "gemma2:27b",
       "family": "gemma",
       "parameters": "27B",
+      "size": "-",
       "provider": "Google DeepMind",
       "status": "ativo",
-      "notes": ""
+      "notes": "Versão estável anterior"
     },
     {
       "name": "phi3:mini",
       "family": "phi",
       "parameters": "~3.8B",
+      "size": "-",
       "provider": "Microsoft",
-      "status": "legado",
-      "notes": "Modelo utilizado na inicialização do projeto"
+      "status": "descontinuado",
+      "notes": "Removido do catálogo ativo frente ao desempenho da linha Gemma 4"
     }
   ]
 }
