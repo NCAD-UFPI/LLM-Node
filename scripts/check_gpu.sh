@@ -37,9 +37,21 @@ echo ""
 
 # ── Utilização e temperatura ──────────────────────────────
 echo "[ Saúde da GPU ]"
-read -r TEMP POWER_DRAW POWER_LIMIT GPU_UTIL MEM_UTIL MEM_USED MEM_TOTAL <<<"$(nvidia-smi \
+GPU_STATS_RAW="$(nvidia-smi \
   --query-gpu=temperature.gpu,power.draw,power.limit,utilization.gpu,utilization.memory,memory.used,memory.total \
-  --format=csv,noheader,nounits | head -n 1 | tr ',' ' ' | xargs)"
+  --format=csv,noheader,nounits | head -n 1 || true)"
+
+if [[ -z "${GPU_STATS_RAW}" ]]; then
+  echo "  ❌ Não foi possível obter métricas da GPU via nvidia-smi."
+  exit 1
+fi
+
+read -r TEMP POWER_DRAW POWER_LIMIT GPU_UTIL MEM_UTIL MEM_USED MEM_TOTAL <<<"$(echo "${GPU_STATS_RAW}" | tr ',' ' ' | xargs)"
+
+if ! [[ "${TEMP}" =~ ^[0-9]+([.][0-9]+)?$ && "${MEM_USED}" =~ ^[0-9]+([.][0-9]+)?$ ]]; then
+  echo "  ❌ Métricas inválidas recebidas do nvidia-smi."
+  exit 1
+fi
 
 TEMP_INT="${TEMP%.*}"
 MEM_USED_INT="${MEM_USED%.*}"
@@ -62,7 +74,21 @@ printf "  Uso GPU           : %s %%\n" "${GPU_UTIL}"
 printf "  Uso Memória       : %s %%\n" "${MEM_UTIL}"
 printf "  VRAM usada        : %s / %s MiB %s (limite: %s GB)\n" "${MEM_USED}" "${MEM_TOTAL}" "${VRAM_STATUS}" "${VRAM_LIMIT_GB}"
 
-TENSOR_SM_UTIL="$(nvidia-smi dmon -s u -c 1 2>/dev/null | awk 'NF>0 && $1 ~ /^[0-9]+$/ {print $2; exit}')"
+TENSOR_SM_UTIL="$(nvidia-smi dmon -s u -c 1 2>/dev/null | awk '
+  /^# *gpu/ {
+    for (i = 1; i <= NF; i++) {
+      if ($i == "sm") {
+        sm_col = i
+        break
+      }
+    }
+    next
+  }
+  $1 ~ /^[0-9]+$/ && sm_col {
+    print $sm_col
+    exit
+  }
+')"
 if [[ "${TENSOR_SM_UTIL}" =~ ^[0-9]+([.][0-9]+)?$ ]]; then
   printf "  Tensor Cores*     : %s %%\n" "${TENSOR_SM_UTIL}"
   echo "  *Métrica aproximada via utilização SM (nvidia-smi dmon)."
