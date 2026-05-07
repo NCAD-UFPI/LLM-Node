@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
-# check_node.sh – Verifica o status geral do nó LLM (Ollama + GPU)
+# check_node.sh – Verifica conectividade básica e resposta do Ollama
 # Nó: 10.94.80.13 | Cluster TechNE – UFPI
 # Uso: bash scripts/check_node.sh [--host <ip>]
 
 set -euo pipefail
 
-HOST="${OLLAMA_HOST:-10.94.80.13}"
+HOST="${OLLAMA_HOST:-127.0.0.1}"
 PORT="${OLLAMA_PORT:-11434}"
 
 # Permite sobrescrever o endereço do nó via argumento
@@ -20,69 +20,38 @@ done
 BASE_URL="http://${HOST}:${PORT}"
 
 echo "======================================================"
-echo "  Monitor do Nó LLM – TechNE / UFPI"
+echo "  Diagnóstico do Nó LLM – TechNE / UFPI"
 echo "  Nó: ${HOST}:${PORT}"
 echo "  Data: $(date '+%Y-%m-%d %H:%M:%S')"
 echo "======================================================"
 echo ""
 
-# ── 1. Ollama – versão ────────────────────────────────────
-echo "[ Ollama ]"
-if curl -sf --max-time 10 "${BASE_URL}/api/version" -o /tmp/ollama_version.json 2>/dev/null; then
-  VERSION=$(python3 -c "import json,sys; d=json.load(open('/tmp/ollama_version.json')); print(d.get('version','N/A'))" 2>/dev/null || cat /tmp/ollama_version.json)
-  echo "  Situação: ✅ Online"
-  echo "  Versão  : ${VERSION}"
+# ── 1. Conectividade básica ───────────────────────────────
+echo "[ Conectividade básica ]"
+if ping -c 1 -W 2 "${HOST}" >/dev/null 2>&1; then
+  echo "  Host ${HOST}: ✅ acessível via ICMP"
 else
-  echo "  Situação: ❌ Offline ou inacessível (verifique conexão com a rede UFPI)"
+  echo "  Host ${HOST}: ❌ sem resposta de ping"
+fi
+
+if curl -sf --max-time 10 "${BASE_URL}/api/version" -o /tmp/ollama_version.json 2>/dev/null; then
+  echo "  API Ollama (${BASE_URL}): ✅ respondendo"
+else
+  echo "  API Ollama (${BASE_URL}): ❌ indisponível"
 fi
 echo ""
 
-# ── 2. Modelos carregados ─────────────────────────────────
-echo "[ Modelos disponíveis ]"
-if curl -sf --max-time 10 "${BASE_URL}/api/tags" -o /tmp/ollama_tags.json 2>/dev/null; then
-  if command -v python3 &>/dev/null; then
-    python3 - <<'EOF'
-import json, sys
-
-with open('/tmp/ollama_tags.json') as f:
-    data = json.load(f)
-
-models = data.get('models', [])
-if not models:
-    print("  Nenhum modelo encontrado.")
-else:
-    for m in models:
-        name = m.get('name', 'N/A')
-        size_bytes = m.get('size', 0)
-        size_gb = size_bytes / (1024 ** 3)
-        modified = m.get('modified_at', 'N/A')[:10]
-        print(f"  • {name:<25} {size_gb:>6.1f} GB  (atualizado: {modified})")
-EOF
+# ── 2. Resposta do binário do Ollama ──────────────────────
+echo "[ Binário Ollama ]"
+if command -v ollama >/dev/null 2>&1; then
+  if OLLAMA_VERSION="$(ollama --version 2>/dev/null | head -n 1)"; then
+    echo "  Binário: ✅ disponível"
+    echo "  Versão : ${OLLAMA_VERSION}"
   else
-    echo "  (python3 não disponível – exibindo JSON bruto)"
-    cat /tmp/ollama_tags.json
+    echo "  Binário: ⚠️ encontrado, mas sem resposta válida"
   fi
 else
-  echo "  ⚠️  Não foi possível obter a lista de modelos."
-fi
-echo ""
-
-# ── 3. GPU ────────────────────────────────────────────────
-echo "[ GPU ]"
-if command -v nvidia-smi &>/dev/null; then
-  nvidia-smi \
-    --query-gpu=name,driver_version,temperature.gpu,utilization.gpu,utilization.memory,memory.used,memory.total \
-    --format=csv,noheader,nounits \
-  | awk -F',' '{
-      printf "  Modelo       : %s\n", $1
-      printf "  Driver       : %s\n", $2
-      printf "  Temperatura  : %s °C\n", $3
-      printf "  Uso GPU      : %s %%\n", $4
-      printf "  Uso Memória  : %s %%\n", $5
-      printf "  VRAM usada   : %s / %s MiB\n", $6, $7
-    }'
-else
-  echo "  ⚠️  nvidia-smi não encontrado. Execute este script diretamente no nó."
+  echo "  Binário: ❌ não encontrado no PATH"
 fi
 echo ""
 

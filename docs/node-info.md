@@ -84,15 +84,32 @@ curl http://10.94.80.13:11434/api/tags
 
 ---
 
-## Scripts de Monitoramento
+## 📊 Monitoramento e Manutenção do Nó
 
-Os scripts disponíveis em [`scripts/`](../scripts/) automatizam as verificações mais comuns:
+Para garantir a estabilidade do `LLMNode01`, existem scripts de verificação automática para monitoramento da GPU e do serviço de inferência. Porque servidores têm a delicadeza emocional de uma torradeira industrial.
 
-| Script               | Descrição                                      |
-|----------------------|------------------------------------------------|
-| `check_node.sh`      | Situação geral do nó (Ollama + GPU)            |
-| `check_gpu.sh`       | Informações detalhadas da GPU NVIDIA L4        |
-| `list_models.sh`     | Modelos carregados no Ollama                   |
+### 📜 Scripts de Diagnóstico
+
+Os scripts encontram-se no diretório [`scripts/`](../scripts/) e devem ser executados via SSH no nó.
+
+#### 🔎 `check_node.sh`
+
+Valida:
+
+- Conectividade básica
+- Resposta do binário do Ollama
+
+#### 🎮 `check_gpu.sh`
+
+Monitoriza a saúde da GPU NVIDIA L4:
+
+- Temperatura (ideal abaixo de 75°C)
+- Consumo de VRAM (limite de 24GB)
+- Utilização dos Tensor Cores
+
+#### 📚 `list_models.sh`
+
+Executa uma query interna na API do Ollama e apresenta os modelos disponíveis em formato legível.
 
 ---
 
@@ -105,22 +122,22 @@ Os scripts disponíveis em [`scripts/`](../scripts/) automatizam as verificaçõ
 
 ---
 
-## Manutenção
+## 🛠️ Procedimento de Atualização
 
-Para adicionar novos modelos ao nó:
+### 1. Aceder ao nó via SSH
 
 ```bash
-# Conectado ao nó via SSH
-ollama pull <nome-do-modelo>
-
-# Exemplo
-ollama pull gemma3:27b
+ssh <usuario>@10.94.80.13
 ```
 
-Para verificar o status do serviço Ollama:
+### 2. Fazer download do novo modelo
 
 ```bash
-systemctl status ollama
-# ou
-ollama ps
+ollama pull <nome:tag>
+```
+
+### 3. Verificar catálogo
+
+```bash
+ollama list
 ```

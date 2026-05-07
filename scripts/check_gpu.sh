@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
-# check_gpu.sh – Exibe informações detalhadas da GPU NVIDIA L4 do nó
+# check_gpu.sh – Monitoramento da saúde da GPU NVIDIA L4
 # Nó: 10.94.80.13 | Cluster TechNE – UFPI
 # Uso: bash scripts/check_gpu.sh
 
 set -euo pipefail
 
 echo "======================================================"
-echo "  Situação da GPU – NVIDIA L4"
+echo "  Monitoramento da GPU – NVIDIA L4"
 echo "  Nó: 10.94.80.13 | TechNE – UFPI"
 echo "  Data: $(date '+%Y-%m-%d %H:%M:%S')"
 echo "======================================================"
@@ -33,20 +33,36 @@ awk -F',' '{
 echo ""
 
 # ── Utilização e temperatura ──────────────────────────────
-echo "[ Utilização ]"
-nvidia-smi --query-gpu=temperature.gpu,fan.speed,power.draw,power.limit,utilization.gpu,utilization.memory,memory.used,memory.free,memory.total \
-  --format=csv,noheader,nounits | \
-awk -F',' '{
-    printf "  Temperatura       : %s °C\n", $1
-    printf "  Ventoinhas        : %s %%\n", $2
-    printf "  Potência atual    : %s W\n", $3
-    printf "  Limite de potência: %s W\n", $4
-    printf "  Uso GPU           : %s %%\n", $5
-    printf "  Uso Memória       : %s %%\n", $6
-    printf "  VRAM usada        : %s MiB\n", $7
-    printf "  VRAM livre        : %s MiB\n", $8
-    printf "  VRAM total        : %s MiB\n", $9
-  }'
+echo "[ Saúde da GPU ]"
+read -r TEMP POWER_DRAW POWER_LIMIT GPU_UTIL MEM_UTIL MEM_USED MEM_TOTAL <<<"$(nvidia-smi \
+  --query-gpu=temperature.gpu,power.draw,power.limit,utilization.gpu,utilization.memory,memory.used,memory.total \
+  --format=csv,noheader,nounits | head -n 1 | tr ',' ' ' | xargs)"
+
+TEMP_STATUS="✅"
+if (( TEMP >= 75 )); then
+  TEMP_STATUS="⚠️"
+fi
+
+VRAM_LIMIT_MIB=$((24 * 1024))
+VRAM_STATUS="✅"
+if (( MEM_USED >= VRAM_LIMIT_MIB )); then
+  VRAM_STATUS="⚠️"
+fi
+
+printf "  Temperatura       : %s °C %s (ideal < 75 °C)\n" "${TEMP}" "${TEMP_STATUS}"
+printf "  Potência atual    : %s W\n" "${POWER_DRAW}"
+printf "  Limite de potência: %s W\n" "${POWER_LIMIT}"
+printf "  Uso GPU           : %s %%\n" "${GPU_UTIL}"
+printf "  Uso Memória       : %s %%\n" "${MEM_UTIL}"
+printf "  VRAM usada        : %s / %s MiB %s (limite: 24 GB)\n" "${MEM_USED}" "${MEM_TOTAL}" "${VRAM_STATUS}"
+
+TENSOR_SM_UTIL="$(nvidia-smi dmon -s u -c 1 2>/dev/null | awk 'NF>0 && $1 ~ /^[0-9]+$/ {print $2; exit}')"
+if [[ -n "${TENSOR_SM_UTIL}" ]]; then
+  printf "  Tensor Cores*     : %s %%\n" "${TENSOR_SM_UTIL}"
+  echo "  *Métrica aproximada via utilização SM (nvidia-smi dmon)."
+else
+  echo "  Tensor Cores      : N/A (nvidia-smi dmon indisponível)"
+fi
 echo ""
 
 # ── Processos usando a GPU ────────────────────────────────
