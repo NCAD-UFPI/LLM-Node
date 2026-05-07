@@ -67,20 +67,59 @@ A GPU NVIDIA L4 é otimizada para inferência de modelos de linguagem de grande 
 
 ---
 
-## Acesso ao Nó
+## 🔐 Acesso ao Nó via SSH
 
-> ⚠️ É necessário estar conectado à **rede da UFPI** para acessar o cluster TechNE.
+Este documento descreve como realizar a conexão segura ao `LLMNode01` para operações de terminal e administração.
+
+### 📍 Endereço de Conexão
+
+- **IP:** `10.94.80.13`
+- **Hostname:** `llmnode01.ncad.ufpi.br`
+
+### 📡 Requisitos de Rede
+
+Para que a conexão seja estabelecida, o dispositivo deve estar em um dos seguintes estados:
+
+1. Conectado via cabo ou Wi‑Fi à Rede Institucional da UFPI.
+2. Com o túnel da VPN Institucional ativo para acesso externo.
+
+### ⌨️ Comandos de Acesso
+
+Utilize o nome de utilizador fornecido pelo NCAD/FreeIPA.
 
 ```bash
-# Acesso SSH ao nó
-ssh usuario@10.94.80.13
-
-# Verificar versão do Ollama via API
-curl http://10.94.80.13:11434/api/version
-
-# Listar modelos disponíveis
-curl http://10.94.80.13:11434/api/tags
+# Formato padrão
+ssh <seu_usuario>@10.94.80.13
 ```
+
+#### Exemplo
+
+```bash
+ssh aluno_cielio@10.94.80.13
+```
+
+### 📌 Notas Importantes
+
+#### Credenciais
+O acesso utiliza a palavra‑passe centralizada do FreeIPA.
+
+#### Primeiro Acesso
+Se for o primeiro acesso, o sistema poderá solicitar confirmação da chave RSA do host.
+
+Digite:
+
+```bash
+yes
+```
+
+#### Diretório Inicial
+Ao entrar no sistema, o utilizador iniciará no diretório:
+
+```bash
+/<nome_usuario>/home/
+```
+
+Com cota aproximada de **40GB**.
 
 ---
 
