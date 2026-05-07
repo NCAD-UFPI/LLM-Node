@@ -63,11 +63,11 @@ printf "  Uso Memória       : %s %%\n" "${MEM_UTIL}"
 printf "  VRAM usada        : %s / %s MiB %s (limite: %s GB)\n" "${MEM_USED}" "${MEM_TOTAL}" "${VRAM_STATUS}" "${VRAM_LIMIT_GB}"
 
 TENSOR_SM_UTIL="$(nvidia-smi dmon -s u -c 1 2>/dev/null | awk 'NF>0 && $1 ~ /^[0-9]+$/ {print $2; exit}')"
-if [[ -n "${TENSOR_SM_UTIL}" ]]; then
+if [[ "${TENSOR_SM_UTIL}" =~ ^[0-9]+([.][0-9]+)?$ ]]; then
   printf "  Tensor Cores*     : %s %%\n" "${TENSOR_SM_UTIL}"
   echo "  *Métrica aproximada via utilização SM (nvidia-smi dmon)."
 else
-  echo "  Tensor Cores      : N/A (nvidia-smi dmon indisponível)"
+  echo "  Tensor Cores      : N/A (saída do nvidia-smi dmon não reconhecida)"
 fi
 echo ""
 
