@@ -51,6 +51,8 @@ Fonte: `ollama list` e endpoint local `http://127.0.0.1:11434/api/tags`
 - `gemma2:27b` (27B, quantização N/D, tamanho N/D, versão estável anterior)
 - `phi3:mini` (descontinuado; removido do catálogo ativo)
 
+> Nota: no recorte atual do catálogo, os metadados de quantização e tamanho do `gemma2:27b` não foram informados.
+
 ### Localização dos Artefatos de Modelo
 
 - Base Ollama: `/opt/llm/.ollama/models`

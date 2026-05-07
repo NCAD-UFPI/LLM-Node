@@ -58,6 +58,8 @@ O `LLMNode01` está focado na execução de modelos da família **Gemma (Google 
 | Gemma 3 | `gemma3:27b` | 27.4B | ~17 GB | Modelo principal para investigação |
 | Gemma 2 | `gemma2:27b` | 27B | N/D | Versão estável anterior |
 
+> Nota: no recorte atual do catálogo, o tamanho do `gemma2:27b` não foi informado.
+
 ## Localização dos Modelos
 
 Os artefatos dos modelos estão armazenados em:
