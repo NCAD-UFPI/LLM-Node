@@ -45,10 +45,13 @@ Repositório para mapeamento, operação e manutenção do nó de LLM do cluster
 
 Fonte: `ollama list` e endpoint local `http://127.0.0.1:11434/api/tags`
 
-- `gemma4:latest` (8.0B, Q4_K_M, ~9.6 GB)
 - `gemma4:31b` (31.3B, Q4_K_M, ~19 GB)
-- `gemma4:e4b` (8.0B, Q4_K_M, ~9.6 GB)
+- `gemma4:latest` (8.0B, Q4_K_M, ~9.6 GB)
 - `gemma3:27b` (27.4B, Q4_K_M, ~17 GB)
+- `gemma2:27b` (27B, quantização N/D, tamanho N/D, versão estável anterior)
+- `phi3:mini` (descontinuado; removido do catálogo ativo)
+
+> Nota: no recorte atual do catálogo, os metadados de quantização e tamanho do `gemma2:27b` não foram informados.
 
 ### Localização dos Artefatos de Modelo
 

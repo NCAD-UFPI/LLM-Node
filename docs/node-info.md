@@ -74,21 +74,30 @@ O serviço `vllm` anteriormente utilizado foi descontinuado em favor da estabili
 
 ## Modelos Disponíveis
 
-### Gemma 3 – 27B  (`gemma3:27b`)
-- **Provedor:** Google DeepMind
-- **Parâmetros:** 27 bilhões
-- **Situação:** ✅ Ativo (modelo principal)
+O `LLMNode01` está focado na execução de modelos da família **Gemma (Google DeepMind)** otimizados para GPU NVIDIA L4.
 
-### Gemma 2 – 27B  (`gemma2:27b`)
-- **Provedor:** Google DeepMind
-- **Parâmetros:** 27 bilhões
-- **Situação:** ✅ Ativo
+| Modelo | Tag Ollama | Parâmetros | Tamanho | Uso recomendado |
+|---|---|---|---|---|
+| Gemma 4 (High) | `gemma4:31b` | 31.3B | ~19 GB | Raciocínio complexo e lógica |
+| Gemma 4 (Base) | `gemma4:latest` | 8.0B | ~9.6 GB | Chats rápidos e tarefas gerais |
+| Gemma 3 | `gemma3:27b` | 27.4B | ~17 GB | Modelo principal para investigação |
+| Gemma 2 | `gemma2:27b` | 27B | N/D | Versão estável anterior |
 
-### Phi-3 Mini  (`phi3:mini`)  _(Legado)_
-- **Provedor:** Microsoft
-- **Parâmetros:** ~3.8 bilhões
-- **Situação:** 🗂️ Legado – foi o modelo usado para inicializar o projeto
-- **Referência:** https://azure.microsoft.com/en-us/blog/introducing-phi-3/
+> Nota: no recorte atual do catálogo, o tamanho do `gemma2:27b` não foi informado.
+
+## Localização dos Modelos
+
+Os artefatos dos modelos estão armazenados em:
+
+```bash
+/opt/llm/.ollama/models/blobs
+```
+
+## Modelos Descontinuados
+
+### Phi-3 Mini (`phi3:mini`)
+- **Situação:** ❌ Removido do catálogo ativo.
+- **Motivo:** Considerado legado frente ao desempenho da linha Gemma 4.
 
 ---
 
@@ -182,7 +191,7 @@ Executa uma query interna na API do Ollama e apresenta os modelos disponíveis e
 | Data (aprox.) | Evento                                                        |
 |---------------|---------------------------------------------------------------|
 | Início        | Projeto iniciado com **Phi3-Mini** (Microsoft)                |
-| Atual         | Frota principal migrada para **Gemma 3 27B** e **Gemma 2 27B**|
+| Atual         | Frota principal migrada para **Gemma 4 (31B/8B)** e **Gemma 3 27B** |
 
 ---
 
