@@ -56,15 +56,15 @@ fi
 TEMP_INT="${TEMP%.*}"
 MEM_USED_INT="${MEM_USED%.*}"
 
-TEMP_STATUS="✅"
+TEMP_STATUS="OK"
 if (( TEMP_INT >= TEMP_LIMIT_C )); then
-  TEMP_STATUS="⚠️"
+  TEMP_STATUS="WARN"
 fi
 
 VRAM_LIMIT_MIB=$((VRAM_LIMIT_GB * 1024))
-VRAM_STATUS="✅"
+VRAM_STATUS="OK"
 if (( MEM_USED_INT >= VRAM_LIMIT_MIB )); then
-  VRAM_STATUS="⚠️"
+  VRAM_STATUS="WARN"
 fi
 
 printf "  Temperatura       : %s °C %s (ideal < %s °C)\n" "${TEMP}" "${TEMP_STATUS}" "${TEMP_LIMIT_C}"
