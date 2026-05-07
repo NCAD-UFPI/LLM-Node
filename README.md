@@ -48,7 +48,7 @@ Fonte: `ollama list` e endpoint local `http://127.0.0.1:11434/api/tags`
 - `gemma4:31b` (31.3B, Q4_K_M, ~19 GB)
 - `gemma4:latest` (8.0B, Q4_K_M, ~9.6 GB)
 - `gemma3:27b` (27.4B, Q4_K_M, ~17 GB)
-- `gemma2:27b` (27B, quantização N/D em inventário, tamanho N/D em inventário, versão estável anterior)
+- `gemma2:27b` (27B, quantização N/D, tamanho N/D, versão estável anterior)
 - `phi3:mini` (descontinuado; removido do catálogo ativo)
 
 ### Localização dos Artefatos de Modelo
