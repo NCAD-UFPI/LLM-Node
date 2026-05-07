@@ -38,14 +38,17 @@ read -r TEMP POWER_DRAW POWER_LIMIT GPU_UTIL MEM_UTIL MEM_USED MEM_TOTAL <<<"$(n
   --query-gpu=temperature.gpu,power.draw,power.limit,utilization.gpu,utilization.memory,memory.used,memory.total \
   --format=csv,noheader,nounits | head -n 1 | tr ',' ' ' | xargs)"
 
+TEMP_INT="${TEMP%.*}"
+MEM_USED_INT="${MEM_USED%.*}"
+
 TEMP_STATUS="✅"
-if (( TEMP >= 75 )); then
+if (( TEMP_INT >= 75 )); then
   TEMP_STATUS="⚠️"
 fi
 
 VRAM_LIMIT_MIB=$((24 * 1024))
 VRAM_STATUS="✅"
-if (( MEM_USED >= VRAM_LIMIT_MIB )); then
+if (( MEM_USED_INT >= VRAM_LIMIT_MIB )); then
   VRAM_STATUS="⚠️"
 fi
 

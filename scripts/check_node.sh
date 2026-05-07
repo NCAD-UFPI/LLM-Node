@@ -5,7 +5,7 @@
 
 set -euo pipefail
 
-HOST="${OLLAMA_HOST:-127.0.0.1}"
+HOST="${OLLAMA_HOST:-10.94.80.13}"
 PORT="${OLLAMA_PORT:-11434}"
 
 # Permite sobrescrever o endereço do nó via argumento
