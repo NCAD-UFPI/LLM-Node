@@ -56,7 +56,7 @@ O `LLMNode01` está focado na execução de modelos da família **Gemma (Google 
 | Gemma 4 (High) | `gemma4:31b` | 31.3B | ~19 GB | Raciocínio complexo e lógica |
 | Gemma 4 (Base) | `gemma4:latest` | 8.0B | ~9.6 GB | Chats rápidos e tarefas gerais |
 | Gemma 3 | `gemma3:27b` | 27.4B | ~17 GB | Modelo principal para investigação |
-| Gemma 2 | `gemma2:27b` | 27B | - | Versão estável anterior |
+| Gemma 2 | `gemma2:27b` | 27B | N/D (inventário atual) | Versão estável anterior |
 
 ## Localização dos Modelos
 
