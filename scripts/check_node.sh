@@ -28,10 +28,16 @@ echo ""
 
 # ── 1. Conectividade básica ───────────────────────────────
 echo "[ Conectividade básica ]"
-if ping -c 1 -W 2 "${HOST}" >/dev/null 2>&1; then
-  echo "  Host ${HOST}: ✅ acessível via ICMP"
+if timeout 2 bash -c "</dev/tcp/${HOST}/${PORT}" >/dev/null 2>&1; then
+  echo "  Host ${HOST}:${PORT}: ✅ acessível via TCP"
 else
-  echo "  Host ${HOST}: ❌ sem resposta de ping"
+  echo "  Host ${HOST}:${PORT}: ❌ sem conectividade TCP"
+fi
+
+if ping -c 1 -W 2 "${HOST}" >/dev/null 2>&1; then
+  echo "  ICMP (${HOST}): OK"
+else
+  echo "  ICMP (${HOST}): indisponível (pode estar bloqueado por firewall)"
 fi
 
 if curl -sf --max-time 10 "${BASE_URL}/api/version" -o /tmp/ollama_version.json 2>/dev/null; then

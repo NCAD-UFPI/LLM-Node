@@ -6,7 +6,7 @@
 set -euo pipefail
 
 TEMP_LIMIT_C=75
-VRAM_LIMIT_GB=24
+VRAM_LIMIT_GIB=24
 
 echo "======================================================"
 echo "  Monitoramento da GPU – NVIDIA L4"
@@ -63,7 +63,7 @@ if (( TEMP_INT >= TEMP_LIMIT_C )); then
   TEMP_STATUS="WARN"
 fi
 
-VRAM_LIMIT_MIB=$((VRAM_LIMIT_GB * 1024))
+VRAM_LIMIT_MIB=$((VRAM_LIMIT_GIB * 1024))
 VRAM_STATUS="OK"
 if (( MEM_USED_INT >= VRAM_LIMIT_MIB )); then
   VRAM_STATUS="WARN"
@@ -74,7 +74,7 @@ printf "  Potência atual    : %s W\n" "${POWER_DRAW}"
 printf "  Limite de potência: %s W\n" "${POWER_LIMIT}"
 printf "  Uso GPU           : %s %%\n" "${GPU_UTIL}"
 printf "  Uso Memória       : %s %%\n" "${MEM_UTIL}"
-printf "  VRAM usada        : %s / %s MiB %s (limite: %s GB)\n" "${MEM_USED}" "${MEM_TOTAL}" "${VRAM_STATUS}" "${VRAM_LIMIT_GB}"
+printf "  VRAM usada        : %s / %s MiB %s (limite: %s GiB)\n" "${MEM_USED}" "${MEM_TOTAL}" "${VRAM_STATUS}" "${VRAM_LIMIT_GIB}"
 
 GPU_SM_UTIL="$(nvidia-smi dmon -s u -c 1 2>/dev/null | awk '
   /^# *gpu/ {
