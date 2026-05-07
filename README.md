@@ -69,6 +69,7 @@ Fonte: `ollama list` e endpoint local `http://127.0.0.1:11434/api/tags`
 ## Arquivos Importantes para Versionar (próxima etapa)
 
 - `docs/node-info.md`: ficha técnica consolidada do nó.
+- `docs/wiki-llmnode01.md`: tutorial inicial da wiki para usuários do nó.
 - `docs/services.md`: estado e troubleshooting de `ollama`/`vllm`.
 - `config/models.json`: catálogo de modelos e metadados.
 - `scripts/check_node.sh`: healthcheck geral.
