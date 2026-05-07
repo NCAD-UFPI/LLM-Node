@@ -105,7 +105,7 @@ Monitoriza a saúde da GPU NVIDIA L4:
 
 - Temperatura (ideal abaixo de 75°C)
 - Consumo de VRAM (limite de 24GB)
-- Utilização dos Tensor Cores
+- Utilização SM da GPU (proxy operacional para carga tensorial)
 
 #### 📚 `list_models.sh`
 

@@ -74,7 +74,7 @@ printf "  Uso GPU           : %s %%\n" "${GPU_UTIL}"
 printf "  Uso Memória       : %s %%\n" "${MEM_UTIL}"
 printf "  VRAM usada        : %s / %s MiB %s (limite: %s GB)\n" "${MEM_USED}" "${MEM_TOTAL}" "${VRAM_STATUS}" "${VRAM_LIMIT_GB}"
 
-TENSOR_SM_UTIL="$(nvidia-smi dmon -s u -c 1 2>/dev/null | awk '
+GPU_SM_UTIL="$(nvidia-smi dmon -s u -c 1 2>/dev/null | awk '
   /^# *gpu/ {
     for (i = 1; i <= NF; i++) {
       if ($i == "sm") {
@@ -89,13 +89,13 @@ TENSOR_SM_UTIL="$(nvidia-smi dmon -s u -c 1 2>/dev/null | awk '
     exit
   }
 ')"
-if [[ -z "${TENSOR_SM_UTIL}" ]]; then
-  echo "  Tensor Cores      : N/A (não foi possível extrair a coluna 'sm' do nvidia-smi dmon)"
-elif [[ "${TENSOR_SM_UTIL}" =~ ^[0-9]+([.][0-9]+)?$ ]]; then
-  printf "  Tensor Cores*     : %s %%\n" "${TENSOR_SM_UTIL}"
-  echo "  *Métrica aproximada via utilização SM (nvidia-smi dmon)."
+if [[ -z "${GPU_SM_UTIL}" ]]; then
+  echo "  Utilização SM     : N/A (não foi possível extrair a coluna 'sm' do nvidia-smi dmon)"
+elif [[ "${GPU_SM_UTIL}" =~ ^[0-9]+([.][0-9]+)?$ ]]; then
+  printf "  Utilização SM*    : %s %%\n" "${GPU_SM_UTIL}"
+  echo "  *Métrica de utilização dos Streaming Multiprocessors (proxy operacional para carga tensorial)."
 else
-  echo "  Tensor Cores      : N/A (saída do nvidia-smi dmon não reconhecida)"
+  echo "  Utilização SM     : N/A (saída do nvidia-smi dmon não reconhecida)"
 fi
 echo ""
 
