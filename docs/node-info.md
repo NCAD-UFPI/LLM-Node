@@ -26,24 +26,49 @@ A GPU NVIDIA L4 é otimizada para inferência de modelos de linguagem de grande 
 
 ---
 
-## Motor de LLM
+## 🤖 Motor de Inferência: Ollama
 
-**Ollama** é o serviço utilizado para servir e gerenciar os modelos de linguagem neste nó.
+O `Ollama` é o runtime utilizado no `LLMNode01` para gestão e execução de modelos de linguagem de grande porte (LLMs). Porque aparentemente humanos decidiram que conversar com máquinas era mais fácil do que documentação organizada.
+
+### ⚙️ Informações do Serviço
 
 - **Porta padrão:** `11434`
-- **API base:** `http://10.94.80.13:11434`
+- **API Base:** `http://10.94.80.13:11434`
+- **Gerenciamento:** `systemd`
 - **Documentação:** https://github.com/ollama/ollama
 
-### Endpoints Principais
+### 📡 Endpoints da API
 
-| Endpoint                                      | Descrição                        |
-|-----------------------------------------------|----------------------------------|
-| `GET  /api/version`                           | Versão do Ollama                 |
-| `GET  /api/tags`                              | Lista modelos disponíveis        |
-| `POST /api/generate`                          | Geração de texto                 |
-| `POST /api/chat`                              | Chat multi-turno                 |
-| `POST /api/pull`                              | Baixar novo modelo               |
-| `DELETE /api/delete`                          | Remover modelo                   |
+| Método | Endpoint | Função |
+|---|---|---|
+| GET | `/api/tags` | Lista modelos carregados |
+| POST | `/api/generate` | Geração de texto |
+| POST | `/api/chat` | Chat multi-turno |
+| GET | `/api/version` | Retorna versão do Ollama |
+
+### 🛠️ Comandos de Diagnóstico
+
+Verificar modelos carregados na VRAM:
+
+```bash
+ollama ps
+```
+
+Listar modelos disponíveis:
+
+```bash
+ollama list
+```
+
+Ver logs em tempo real:
+
+```bash
+journalctl -u ollama -f
+```
+
+### 📌 Nota Técnica
+
+O serviço `vllm` anteriormente utilizado foi descontinuado em favor da estabilidade do `Ollama` na arquitetura NVIDIA L4.
 
 ---
 
