@@ -1,38 +1,20 @@
-# Visão Geral
+# Visao Geral
 
-Este repositório documenta o nó de LLM do cluster TechNE/UFPI, incluindo inventário técnico, runtime de inferência, catálogo de modelos e procedimentos operacionais.
+Esta Wiki ajuda voce a usar os modelos de LLM disponiveis no no `10.94.80.13` de forma rapida.
 
-## Objetivos
+## O que voce encontra aqui
 
-- Centralizar informações técnicas do nó.
-- Facilitar operação diária e troubleshooting.
-- Manter histórico de mudanças de modelos e infraestrutura.
-- Padronizar scripts de validação e monitoramento.
+- Como conectar e testar a API
+- Quais modelos estao disponiveis
+- Exemplos prontos de uso (`generate` e `chat`)
+- Dicas para evitar erros comuns
 
-## Escopo
+## URL base da API
 
-- Nó principal: `llmnode01.ncad.ufpi.br` (`10.94.80.13`)
-- Runtime principal: `Ollama`
-- GPU principal: `NVIDIA L4`
-- Armazenamento de modelos: `/opt/llm/.ollama/models`
+`http://10.94.80.13:11434`
 
-## Organização sugerida da Wiki
+## Comece por aqui
 
-- 01 Visão Geral
-- 02 Inventário do Nó
-- 03 Runtime e Serviços
-- 04 Catálogo de Modelos
-- 05 Armazenamento e Artefatos
-- 06 Operação do Dia a Dia
-- 07 Scripts de Monitoramento
-- 08 Troubleshooting
-- 09 Segurança e Acesso
-- 10 Roadmap
-
-## Fonte de Verdade
-
-- Inventário técnico consolidado: `README.md`
-- Metadados de modelos: `config/models.json`
-- Endpoints do Ollama: `config/ollama.json`
-- Documentação complementar: `docs/node-info.md`
-- Scripts operacionais: `scripts/*.sh`
+1. Abra a pagina `02-Primeiros-Passos.md`
+2. Rode um teste em `03-Como-Chamar-a-API.md`
+3. Escolha um modelo em `04-Modelos-Disponiveis.md`
