@@ -35,7 +35,7 @@
       "name": "gemma2:27b",
       "family": "gemma",
       "parameters": "27B",
-      "size": "-",
+      "size": "N/D",
       "provider": "Google DeepMind",
       "status": "ativo",
       "notes": "Versão estável anterior"
@@ -44,7 +44,7 @@
       "name": "phi3:mini",
       "family": "phi",
       "parameters": "~3.8B",
-      "size": "-",
+      "size": "N/D",
       "provider": "Microsoft",
       "status": "descontinuado",
       "notes": "Removido do catálogo ativo frente ao desempenho da linha Gemma 4"
