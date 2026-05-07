@@ -5,6 +5,9 @@
 
 set -euo pipefail
 
+TEMP_LIMIT_C=75
+VRAM_LIMIT_GB=24
+
 echo "======================================================"
 echo "  Monitoramento da GPU – NVIDIA L4"
 echo "  Nó: 10.94.80.13 | TechNE – UFPI"
@@ -42,22 +45,22 @@ TEMP_INT="${TEMP%.*}"
 MEM_USED_INT="${MEM_USED%.*}"
 
 TEMP_STATUS="✅"
-if (( TEMP_INT >= 75 )); then
+if (( TEMP_INT >= TEMP_LIMIT_C )); then
   TEMP_STATUS="⚠️"
 fi
 
-VRAM_LIMIT_MIB=$((24 * 1024))
+VRAM_LIMIT_MIB=$((VRAM_LIMIT_GB * 1024))
 VRAM_STATUS="✅"
 if (( MEM_USED_INT >= VRAM_LIMIT_MIB )); then
   VRAM_STATUS="⚠️"
 fi
 
-printf "  Temperatura       : %s °C %s (ideal < 75 °C)\n" "${TEMP}" "${TEMP_STATUS}"
+printf "  Temperatura       : %s °C %s (ideal < %s °C)\n" "${TEMP}" "${TEMP_STATUS}" "${TEMP_LIMIT_C}"
 printf "  Potência atual    : %s W\n" "${POWER_DRAW}"
 printf "  Limite de potência: %s W\n" "${POWER_LIMIT}"
 printf "  Uso GPU           : %s %%\n" "${GPU_UTIL}"
 printf "  Uso Memória       : %s %%\n" "${MEM_UTIL}"
-printf "  VRAM usada        : %s / %s MiB %s (limite: 24 GB)\n" "${MEM_USED}" "${MEM_TOTAL}" "${VRAM_STATUS}"
+printf "  VRAM usada        : %s / %s MiB %s (limite: %s GB)\n" "${MEM_USED}" "${MEM_TOTAL}" "${VRAM_STATUS}" "${VRAM_LIMIT_GB}"
 
 TENSOR_SM_UTIL="$(nvidia-smi dmon -s u -c 1 2>/dev/null | awk 'NF>0 && $1 ~ /^[0-9]+$/ {print $2; exit}')"
 if [[ -n "${TENSOR_SM_UTIL}" ]]; then
