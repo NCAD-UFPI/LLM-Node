@@ -46,15 +46,17 @@ if [[ -z "${GPU_STATS_RAW}" ]]; then
   exit 1
 fi
 
-read -r TEMP POWER_DRAW POWER_LIMIT GPU_UTIL MEM_UTIL MEM_USED MEM_TOTAL <<<"$(echo "${GPU_STATS_RAW}" | tr ',' ' ' | xargs)"
+read -r TEMP POWER_DRAW POWER_LIMIT GPU_UTIL MEM_UTIL MEM_USED MEM_TOTAL <<<"$(tr ',' ' ' <<<"${GPU_STATS_RAW}" | xargs)"
 
-if ! [[ "${TEMP}" =~ ^[0-9]+([.][0-9]+)?$ && "${MEM_USED}" =~ ^[0-9]+([.][0-9]+)?$ ]]; then
-  echo "  ❌ Métricas inválidas recebidas do nvidia-smi."
-  exit 1
-fi
+for value in "${TEMP}" "${POWER_DRAW}" "${POWER_LIMIT}" "${GPU_UTIL}" "${MEM_UTIL}" "${MEM_USED}" "${MEM_TOTAL}"; do
+  if ! [[ "${value}" =~ ^[0-9]+([.][0-9]+)?$ ]]; then
+    echo "  ❌ Métricas inválidas recebidas do nvidia-smi."
+    exit 1
+  fi
+done
 
-TEMP_INT="${TEMP%.*}"
-MEM_USED_INT="${MEM_USED%.*}"
+TEMP_INT="${TEMP%%.*}"
+MEM_USED_INT="${MEM_USED%%.*}"
 
 TEMP_STATUS="OK"
 if (( TEMP_INT >= TEMP_LIMIT_C )); then
