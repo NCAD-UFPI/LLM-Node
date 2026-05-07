@@ -89,7 +89,9 @@ TENSOR_SM_UTIL="$(nvidia-smi dmon -s u -c 1 2>/dev/null | awk '
     exit
   }
 ')"
-if [[ "${TENSOR_SM_UTIL}" =~ ^[0-9]+([.][0-9]+)?$ ]]; then
+if [[ -z "${TENSOR_SM_UTIL}" ]]; then
+  echo "  Tensor Cores      : N/A (não foi possível extrair a coluna 'sm' do nvidia-smi dmon)"
+elif [[ "${TENSOR_SM_UTIL}" =~ ^[0-9]+([.][0-9]+)?$ ]]; then
   printf "  Tensor Cores*     : %s %%\n" "${TENSOR_SM_UTIL}"
   echo "  *Métrica aproximada via utilização SM (nvidia-smi dmon)."
 else
